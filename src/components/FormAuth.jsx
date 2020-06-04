@@ -2,10 +2,9 @@ import React from 'react';
 import { Formik } from 'formik';
 import { Typography } from 'antd';
 import { Form } from 'formik-antd';
-import axios from 'axios';
-import styles from './form/Form.module.css';
+import styles from './Form.module.css';
 
-import { schemaValidate } from './form/shema';
+import { schemaValidate } from './shema';
 import FieldName from './form/FieldName';
 import FieldPassword from './form/FieldPassword';
 import FieldAccept from './form/FieldAccept';
@@ -14,6 +13,7 @@ import FieldEmail from './form/FieldEmail';
 import FieldWebsite from './form/FieldWebsite';
 import FieldSkills from './form/FieldSkills';
 import { filtredEmptyFields } from '../utils/filtrerValues';
+import { fetchAuth } from './api/fetchAuth';
 
 const { Title } = Typography;
 
@@ -33,24 +33,11 @@ const FormAuth = () => {
 
   const handleSubmit = async (values, { setFieldError, setSubmitting }) => {
     const filtred = filtredEmptyFields(values);
-    try {
-      const response = await axios.post(URL, filtred);
-      if (response.status === 200) {
-        alert(response.data.message);
-      }
-    } catch (err) {
-      setFieldError('email', 'Пользователь с таким email уже зарегистрирован');
-    } finally {
-      setSubmitting(false);
-    }
+    fetchAuth(URL, filtred, setFieldError, setSubmitting);
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={schemaValidate}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={schemaValidate} onSubmit={handleSubmit}>
       {() => (
         <Form>
           <div className={styles.formWrap}>
@@ -65,7 +52,7 @@ const FormAuth = () => {
               <FieldSkills />
               <FieldAccept />
               <hr />
-              <button type="submit" style={{ width: '100%' }}>
+              <button type="submit" className='btnSubmit'>
                 Submit
               </button>
             </div>

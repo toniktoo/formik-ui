@@ -2,7 +2,7 @@ import React from 'react';
 import { ErrorMessage } from 'formik';
 import { Typography } from 'antd';
 import { InputNumber } from 'formik-antd';
-import styles from './Form.module.css';
+import styles from '../Form.module.css';
 
 const { Text } = Typography;
 

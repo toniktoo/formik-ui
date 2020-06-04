@@ -3,7 +3,7 @@ import { ErrorMessage } from 'formik';
 import { Typography } from 'antd';
 import { Checkbox } from 'formik-antd';
 import className from 'classnames/bind';
-import styles from './Form.module.css';
+import styles from '../Form.module.css';
 
 const cx = className.bind(styles);
 const { Text } = Typography;
